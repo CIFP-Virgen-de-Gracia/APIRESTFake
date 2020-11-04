@@ -1,11 +1,22 @@
 {
   "name": "apirestfake",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "Fake API REST para proyectos para praticar y consumir datos de ella",
-  "main": "server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "serve": "npm run start",
-    "start": "node server.js"
+    "start": "node dist/server.js",
+    "dev": "node --require @babel/register src/server.js",
+    "lint": "eslint 'src/**/*.js'",
+    "fix": "eslint --fix 'src/**/*.js'",
+    "watch": "nodemon",
+    "prune": "npm prune --production",
+    "undist": "rm -rf dist",
+    "build": "npm run undist && babel src -d dist && cp -r 'public' 'dist/public' && cp -r 'src/bd' 'dist/bd'",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 /tests",
+    "test:users":"cross-env NODE_ENV=test jest --testTimeout=10000 /tests/users.test.js",
+    "test:server": "cross-env NODE_ENV=test jest --testTimeout=10000 /tests/server.test.js",
+    "test:cover": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -13,16 +24,37 @@
   },
   "keywords": [
     "API",
-    "REST"
+    "REST",
+    "Node",
+    "Json",
+    "Fake",
+    "Data"
   ],
   "author": "joseluisgs",
   "license": "MIT",
+  "twitter": "https://twitter.com/joseluisgonsan",
   "bugs": {
     "url": "https://github.com/joseluisgs/APIRESTFake/issues"
   },
   "homepage": "https://github.com/joseluisgs/APIRESTFake#readme",
   "dependencies": {
-    "json-server": "^0.16.2",
-    "express": "^4.17.1"
+    "@babel/runtime": "^7.12.5",
+    "express": "^4.17.1",
+    "json-server": "^0.16.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.12.1",
+    "babel-eslint": "^10.1.0",
+    "babel-preset-airbnb": "^5.0.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6",
+    "supertest": "^6.0.0"
   }
 }
